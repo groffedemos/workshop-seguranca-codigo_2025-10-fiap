@@ -14,7 +14,7 @@ env:
   DIR_DOCKERFILE: './src/ConsoleAppJobHttpRequest'
   DIR_DEVOPS_ARTIFACTS: './devops'
   DIR_TESTS: './tests'
-  PROJECT_FILE: 'code-scanning.csproj'
+  PROJECT_FILE: 'ConsoleAppJobHttpRequest.csproj'
 
 jobs:
 
