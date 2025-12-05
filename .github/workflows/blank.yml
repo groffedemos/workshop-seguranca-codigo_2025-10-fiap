@@ -35,7 +35,7 @@ jobs:
         run: |
           cd ${{ env.DIR_DOCKERFILE }}
           if ! grep -q '<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>' "${{ env.PROJECT_FILE }}"; then
-              sed -i '/<PropertyGroup>/a \    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>' "$projectFile"
+              sed -i '/<PropertyGroup>/a \    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>' "${{ env.PROJECT_FILE }}"
           fi
         
       - name: Exibir o conteúdo do arquivo .csproj após ajustes com sed
