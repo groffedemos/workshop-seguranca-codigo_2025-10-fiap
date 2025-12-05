@@ -66,9 +66,9 @@ jobs:
             
       - name: Listar arquivos de resultado
         run: |
+          cd results
           pwd
           echo
-          cd results
           ls -lah
           
       - name: Upload SARIF file
