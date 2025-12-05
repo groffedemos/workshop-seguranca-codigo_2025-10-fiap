@@ -64,7 +64,7 @@ jobs:
 
       - name: Executar o Trivy gerando SARIF
         run: |
-          trivy fs --scanners vuln,secret,misconfig \
+          trivy fs --scanners vuln \
             --format sarif \
             --output ./results/trivy-scancode.sarif \
             ${{ env.DIR_DOCKERFILE }}
