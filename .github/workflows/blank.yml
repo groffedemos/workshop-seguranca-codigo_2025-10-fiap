@@ -14,12 +14,39 @@ env:
   DIR_DOCKERFILE: './src/ConsoleAppJobHttpRequest'
   DIR_DEVOPS_ARTIFACTS: './devops'
   DIR_TESTS: './tests'
+  PROJECT_FILE: 'code-scanning.csproj'
 
 jobs:
+
+  code-scanning:
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Exibir o conteúdo do arquivo .csproj antes dos ajustes com sed
+        run: |
+          cd ${{ env.DIR_DOCKERFILE }}
+          cat ${{ env.PROJECT_FILE }}
+
+      - name: Configurar o arquivo .csproj
+        run: |
+          cd ${{ env.DIR_DOCKERFILE }}
+          if ! grep -q '<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>' "${{ env.PROJECT_FILE }}"; then
+              sed -i '/<PropertyGroup>/a \    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>' "$projectFile"
+          fi
+        
+      - name: Exibir o conteúdo do arquivo .csproj após ajustes com sed
+        run: |
+          cd ${{ env.DIR_DOCKERFILE }}
+          cat ${{ env.PROJECT_FILE }}
 
   build_dockerscout:
     runs-on: ubuntu-latest
     if: always()
+    needs: code-scanning
 
     steps:
     - uses: actions/checkout@v3
