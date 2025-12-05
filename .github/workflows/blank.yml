@@ -43,6 +43,32 @@ jobs:
           cd ${{ env.DIR_DOCKERFILE }}
           cat ${{ env.PROJECT_FILE }}
 
+      - name: Instalar o Trivy
+        run: |
+          sudo apt-get install -y wget apt-transport-https gnupg
+          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee /etc/apt/sources.list.d/trivy.list
+          sudo apt-get update
+          sudo apt-get install -y trivy
+
+      - name: Testar execução do Trivy
+        run: trivy
+
+      - name: Criar o diretório results
+        run: mkdir -p results
+
+      - name: Executar o Trivy gerando SARIF
+        run: |
+          trivy fs --scanners vuln,secret,misconfig \
+            --format sarif \
+            --output ./results/report-code.sarif \
+            ${{ env.DIR_DOCKERFILE }}
+            
+      - name: Listar arquivos de resultado
+        run: |
+          cd results
+          ls -lah
+          
   build_dockerscout:
     runs-on: ubuntu-latest
     if: always()
