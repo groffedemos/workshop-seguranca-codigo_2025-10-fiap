@@ -18,7 +18,6 @@ env:
 jobs:
 
   build_dockerscout:
-    needs: kubernetes_yaml_scanning
     runs-on: ubuntu-latest
     if: always()
 
