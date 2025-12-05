@@ -66,6 +66,8 @@ jobs:
             
       - name: Listar arquivos de resultado
         run: |
+          pwd
+          echo
           cd results
           ls -lah
           
