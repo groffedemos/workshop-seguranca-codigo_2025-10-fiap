@@ -43,6 +43,11 @@ jobs:
           cd ${{ env.DIR_DOCKERFILE }}
           cat ${{ env.PROJECT_FILE }}
 
+      - name: Restaurar dependências
+        run: |
+          cd ${{ env.DIR_DOCKERFILE }}
+          dotnet restore
+
       - name: Instalar o Trivy
         run: |
           sudo apt-get install -y wget apt-transport-https gnupg
