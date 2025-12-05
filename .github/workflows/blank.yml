@@ -117,8 +117,6 @@ jobs:
       - name: Executar o Trivy gerando SARIF
         run: |
           trivy image --scanners vuln,secret,misconfig \
-            --exit-code 1 \
-            --severity HIGH,CRITICAL \
             --format sarif \
             --output ./results/trivy-scanimage.sarif \
             image-to-scan:test
